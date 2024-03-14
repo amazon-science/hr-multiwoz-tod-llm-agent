@@ -20,6 +20,8 @@ Be sure to:
 |0.588  | 0.000       | 0.134   | mdeberta-v3-base [^8]         |
 |0.721  | 0.519       | 0.168   | distilbert-base [^9]          |
 |**0.786**  | **0.598**       | 0.174   | bert-large-uncased [^10]      |
+
+
 It seems that bert-large-uncased is finetuned through whole word masking on Squad dataset. This method achieves the best performance.
  https://huggingface.co/google-bert/bert-large-uncased-whole-word-masking-finetuned-squad
 
