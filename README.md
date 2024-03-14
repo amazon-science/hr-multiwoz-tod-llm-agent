@@ -1,13 +1,8 @@
-## My Project
+# HR-MultiWOZ: A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent
 
-TODO: Fill this README out!
+This repository hosts the data generation recipe and benchmarking of [HR-MultiWOZ](https://arxiv.org/abs/2402.01018): A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent. 
 
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
-
-# :trophy: Extractive QA Benchmarks
+## :trophy: Extractive QA Benchmarks
 | F1    | Exact Match | BLEU    | Method                        |
 |-------|-------------|---------|-------------------------------|
 |0.045  | 0.000       | 0.011   | bert-base-uncased [^1]        |
@@ -43,6 +38,18 @@ F1 = calculate_f1_score(evaluations['answer'], evaluations[method])
 Exact_Match = calculate_exact_match(evaluations['answer'].tolist(), evaluations[method].tolist())
 Bleu = calculate_bleu(evaluations['answer'], evaluations[method])
 
+```
+
+## Introduction
+
+HR-Multiwoz is a fully-labeled dataset of 550 conversations spanning 10 HR domains to evaluate LLM Agent. It is the first labeled open-sourced conversation dataset in the HR domain for NLP research. In this repo we provides a detailed recipe for the data generation procedure described in the paper along with data analysis and human evaluations. The data generation pipeline is transferable and can be easily adapted for labeled conversation data generation in other domains. The proposed data-collection pipeline is mostly based on LLMs with minimal human involvement for annotation, which is time and cost-efficient. 
+
+## Requirements
+
+Install all required python dependencies:
+
+```
+pip install -r requirements.txt
 ```
 
 ## Reference
