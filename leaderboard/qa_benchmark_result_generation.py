@@ -3,16 +3,11 @@ import torch
 import pandas as pd
 import pickle
 import collections
+from transformers import  pipeline
 
 # Function to answer questions based on the model name, question, and context
-def answer_question(model_name, question, context):
-    # Setup for device. Use GPU if available, otherwise fallback to CPU
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    
-    # Load the tokenizer and model using the specified model_name
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForQuestionAnswering.from_pretrained(model_name).to(device)
-    
+def answer_question(tokenizer, model, question, context):
+
     # Tokenize input text
     inputs = tokenizer.encode_plus(question, context, add_special_tokens=True, return_tensors="pt").to(device)
     input_ids = inputs["input_ids"].tolist()[0]
@@ -31,28 +26,53 @@ def answer_question(model_name, question, context):
     
     return answer
 
-# Load your QA dataset
-with open('qa_dataset.pkl', 'rb') as f:
-    data = pickle.load(f)
 
+def entity_extract(question, context, thred = 0):
+
+        QA_input = {
+                'question': question,
+                'context': context
+                }
+        r = question_answerer(QA_input)
+        if r['score'] < thred:
+            return 'I do not know'
+        else:
+            return r['answer']
+
+# Load your QA dataset
+# with open('qa_dataset.pkl', 'rb') as f:
+#     data = pickle.load(f)
+data = pd.read_csv('qa_dataset_result.csv')
 # Prepare to store the results
 result = collections.defaultdict(list)
 
 # List of models to use for answering questions
-model_names = ["bert-base-uncased", "distilbert-base-uncased", "deepset/roberta-base-squad2", "albert-base-v2", "google/electra-small-discriminator", "xlnet-base-cased"]
-
+#model_names = ["bert-base-uncased", "distilbert-base-uncased", "deepset/roberta-base-squad2", "albert-base-v2", "google/electra-small-discriminator", "xlnet-base-cased"]
+model_names = ["deepset/deberta-v3-large-squad2", "timpal0l/mdeberta-v3-base-squad2", "distilbert/distilbert-base-cased-distilled-squad","bert-large-uncased-whole-word-masking-finetuned-squad" ]
 # Iterate over each model and each question-context pair
 for name in model_names:
-    print(f"Processing with model: {name}")
+    if False:
+        print(f"Processing with model: {name}")
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+                
+        tokenizer = AutoTokenizer.from_pretrained(name)
+        model = AutoModelForQuestionAnswering.from_pretrained(name).to(device)
+    else:
+        question_answerer = pipeline("question-answering", model=name)
     for q, a in zip(data.question, data.answer_context):
-        try:
-            # Make sure to pass 'name' to use the correct model for each iteration
-            prediction = answer_question(name, q, a)
+        if False:
+            try:
+                    # Setup for device. Use GPU if available, otherwise fallback to CPU
+                            # Make sure to pass 'name' to use the correct model for each iteration
+                prediction = answer_question(tokenizer, model, q, a)
+                result[name].append(prediction)
+            except Exception as e:
+                print(f"Error processing with model {name}: {e}")
+                # Optionally, append a placeholder or error message to keep track
+                result[name].append("Error processing question")
+        else:
+            prediction = entity_extract(q, a)
             result[name].append(prediction)
-        except Exception as e:
-            print(f"Error processing with model {name}: {e}")
-            # Optionally, append a placeholder or error message to keep track
-            result[name].append("Error processing question")
 
 for name in model_names:
     data[name.split('/')[-1] + '_result'] = result[name]
