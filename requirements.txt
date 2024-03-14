@@ -1,5 +1,5 @@
 nltk==3.6.6
-rouge-score==0.1
+rouge==1.0.1
 transformers==4.36.0
 torch==1.13.1
 
