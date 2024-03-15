@@ -48,7 +48,8 @@ result = collections.defaultdict(list)
 
 # List of models to use for answering questions
 #model_names = ["bert-base-uncased", "distilbert-base-uncased", "deepset/roberta-base-squad2", "albert-base-v2", "google/electra-small-discriminator", "xlnet-base-cased"]
-model_names = ["deepset/deberta-v3-large-squad2", "timpal0l/mdeberta-v3-base-squad2", "distilbert/distilbert-base-cased-distilled-squad","bert-large-uncased-whole-word-masking-finetuned-squad" ]
+model_names = ["deepset/deberta-v3-large-squad2", "timpal0l/mdeberta-v3-base-squad2", 
+               "distilbert/distilbert-base-cased-distilled-squad","bert-large-uncased-whole-word-masking-finetuned-squad" ]
 # Iterate over each model and each question-context pair
 for name in model_names:
     if False:
