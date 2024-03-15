@@ -3,8 +3,7 @@ import pickle
 import numpy as np
 #ask questions every time and make the 
 from transformers import  pipeline
-with open('sgd_dataset.pkl', 'rb') as f:
-    data = pickle.load(f)
+
 
 def is_perfect_match(text1, text2, max_edits=5):
     """
@@ -40,10 +39,7 @@ def is_perfect_match(text1, text2, max_edits=5):
     
     edits += abs(len(text1) - len(text2))
     return edits <= max_edits
-
-
-
-name = "bert-large-uncased-whole-word-masking-finetuned-squad" 
+name = "deepset/deberta-v3-large-squad2"
 question_answerer = pipeline("question-answering", model=name)
 def entity_extract(question, context, thred = 0):
 
@@ -57,6 +53,11 @@ def entity_extract(question, context, thred = 0):
         else:
             return r['answer']
 
+
+
+
+with open('sgd_dataset.pkl', 'rb') as f:
+    data = pickle.load(f)
 with open('template.pkl', 'rb') as f:
     template = pickle.load(f)
 
@@ -101,6 +102,7 @@ for indx in range(data.shape[0]):
     SA_d += new_list[-1]
     JAG_d += len(new_list)
     JAG_v += np.sum([v1 == v2 for v1, v2 in zip(match, new_list)])
-    #print(SA_v, SA_d, JAG_d, JAG_v)  
-print("Slot accuracy " + SA_v / SA_d)
-print("JAG accuracy" + JAG_v / JAG_d)
+
+print(SA_v, SA_d, JAG_d, JAG_v)  
+print("Slot accuracy " + str(SA_v / SA_d))
+print("JAG accuracy" + str(JAG_v / JAG_d))
