@@ -1,16 +1,33 @@
 # HR-MultiWOZ: A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent
 
-This repository hosts the data generation recipe and benchmarking of [HR-MultiWOZ](https://arxiv.org/abs/2402.01018): A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent. 
+This repository hosts the data generation recipe and benchmarking of [HR-MultiWOZ](https://arxiv.org/abs/2402.01018): A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent. This paper is accepted by EACL NLP4HR workshop as presentations. 
+
+## Flow
+![The workflow of the paper](diagram.jpeg)
+
+## Citation
+```
+@misc{xu2024hrmultiwoz,
+      title={HR-MultiWOZ: A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent}, 
+      author={Weijie Xu and Zicheng Huang and Wenxiang Hu and Xi Fang and Rajesh Kumar Cherukuri and Naumaan Nayyar and Lorenzo Malandri and Srinivasan H. Sengamedu},
+      year={2024},
+      eprint={2402.01018},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+```
 
 ## :trophy: TOD Benchmarks
 
 | JAG    | slot accuracy   | Method                        |
 |--------|-----------------|-------------------------------|
-| 8.08   | 27.18           | TransferQA                    |
+| **18.89**  | **55.61**          | TransferQA with Deberta[11]                   |
+| 8.65   | 26.62           | TransferQA with Bert[11]                   |
 
-Since most of multiwoz dataset is from other domain and is hard to do transfer learning, we can only implement our own baseline. The baseline is inspired by [11] and we select based performing model from below as our base language model. 
 
-As you can see, the performance is still really bad. This means that existed SGD method is not able to transfer to do transfer learning in our  
+Since most of multiwoz dataset is from other domain and is hard to do transfer learning, we can only implement our own baseline. The baseline is inspired by [11] and we select 2 best performing models from below as our base language model. Check leadership/tod_benchmark.py for our implementation. 
+
+As you can see, the performance is still really bad. This means that existed SGD method is not able to transfer to do transfer learning in our use case. 
 
 ## :trophy: Extractive QA Benchmarks
 | F1    | Exact Match | BLEU    | Method                        |
@@ -93,4 +110,5 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 ## License
 
 This project is licensed under the Apache-2.0 License.
+
 
