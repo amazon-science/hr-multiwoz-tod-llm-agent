@@ -2,9 +2,6 @@
 
 This repository hosts the data generation recipe and benchmarking of [HR-MultiWOZ](https://arxiv.org/abs/2402.01018): A Task Oriented Dialogue (TOD) Dataset for HR LLM Agent. This paper is accepted by EACL NLP4HR workshop as presentations. 
 
-## Flow
-![The workflow of the paper](diagram.jpeg)
-
 ## Citation
 ```
 @misc{xu2024hrmultiwoz,
@@ -17,6 +14,18 @@ This repository hosts the data generation recipe and benchmarking of [HR-MultiWO
 }
 ```
 
+## Data
+!Please note that the dataset is an independent reimplementation of our methods. It is not release by Amazon. 
+All dataset is under Data folder.
+sgd_dataset.pkl: This is the schema guided dataset.
+template.pkl: This is the place where you can access the question for each entity.
+qa_dataset.pkl: This is the place where you can get question, context and extractive answers. 
+
+## Flow
+![The workflow of the paper](diagram.jpeg)
+
+
+
 ## :trophy: TOD Benchmarks
 
 | JAG    | slot accuracy   | Method                        |
@@ -27,7 +36,14 @@ This repository hosts the data generation recipe and benchmarking of [HR-MultiWO
 
 Since most of multiwoz dataset is from other domain and is hard to do transfer learning, we can only implement our own baseline. The baseline is inspired by [11] and we select 2 best performing models from below as our base language model. Check leadership/tod_benchmark.py for our implementation. 
 
-As you can see, the performance is still really bad. This means that existed SGD method is not able to transfer to do transfer learning in our use case. 
+As you can see, the performance is still really bad. This means that existed SGD method may not be able to transfer to do transfer learning in our use case. 
+
+You can follow leaderboard/tod_benchmark.py to benchmark you own methods. 
+
+You can also benchmark any question answering model from huggingface using the following code:
+```
+python3 leaderboard/qa_benchmark_evaluation.py --name [adding model name] --threshold [adding threshold between 0 and 1 to define the confidence]
+```
 
 ## :trophy: Extractive QA Benchmarks
 | F1    | Exact Match | BLEU    | Method                        |
