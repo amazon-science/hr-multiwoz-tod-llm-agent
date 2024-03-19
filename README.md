@@ -29,9 +29,10 @@ pip install -r requirements.txt
 ## Data
 !Please note that the dataset is an independent reimplementation of our methods. It is not release by Amazon. 
 All dataset is under Data folder.
-sgd_dataset.pkl: This is the schema guided dataset.
+sgd_dataset.pkl: This is the schema guided dataset. https://huggingface.co/datasets/xwjzds/hr_multiwoz_tod_sgd
 template.pkl: This is the place where you can access the question for each entity.
-qa_dataset.pkl: This is the place where you can get question, context and extractive answers. 
+qa_dataset.pkl: This is the place where you can get question, context and extractive answers.  https://huggingface.co/datasets/xwjzds/extractive_qa_question_answering_hr
+
 
 ## Flow
 ![The workflow of the paper](diagram.jpeg)
