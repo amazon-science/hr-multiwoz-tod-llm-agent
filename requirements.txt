@@ -1,4 +1,4 @@
-nltk==3.6.6
+nltk==3.9
 rouge==1.0.1
 transformers==4.38.0
 torch==2.2.0
